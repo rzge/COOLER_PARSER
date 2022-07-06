@@ -31,3 +31,10 @@ for cooler_type in all_coolers_href:
 
 with open('all_coolers_type_dict.json', 'w', encoding='utf-8') as file: # записыввем типы кулеров в json файл
     json.dump(all_coolers_type_dict, file, indent=4, ensure_ascii=False)
+
+with open('all_coolers_type_dict.json', encoding='utf-8') as file:
+    all_coolers = json.load(file)
+
+for cooler_type, cooler_href in all_coolers.items():
+    print(cooler_type)
+    print(cooler_href)
