@@ -40,4 +40,6 @@ for cooler_type, cooler_href in all_coolers.items():
     src = req.text
     with open(f'data/{cooler_type}.html', 'w', encoding='utf-8') as file:
         file.write(src)
-
+    with open(f'data/{cooler_type}.html', encoding='utf-8') as file:
+        src = file.read()
+    soup = BeautifulSoup(src, 'lxml')
