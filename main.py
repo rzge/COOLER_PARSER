@@ -22,7 +22,11 @@ with open("index.html", encoding='utf-8') as file:
 soup = BeautifulSoup(src, 'lxml')
 
 all_coolers_href = soup.find_all(class_='catalog-top-sections__link')
+all_coolers_type_dict = {}
 for cooler_type in all_coolers_href:
-    cooler_text = cooler_type.text # название типа кулера для воды
-    cooler_href = 'https://akva-mir.ru' + cooler_type.get('href') #ссылка на тип кулера для воды
-    print(cooler_text + ' ' + cooler_href)
+    cooler_text = cooler_type.text  # название типа кулера для воды
+    cooler_href = 'https://akva-mir.ru' + cooler_type.get('href')  # ссылка на тип кулера для воды
+    all_coolers_type_dict[cooler_text] = cooler_href
+
+with open('all_coolers_type_dict.json', 'w', encoding='utf-8') as file:
+    json.dump(all_coolers_type_dict, file, indent=4, ensure_ascii=False)
