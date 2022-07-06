@@ -35,7 +35,7 @@ with open('all_coolers_type_dict.json', 'w', encoding='utf-8') as file: # зап
 with open('all_coolers_type_dict.json', encoding='utf-8') as file:
     all_coolers = json.load(file)
 
-for cooler_type, cooler_href in all_coolers.items():
+for cooler_type, cooler_href in all_coolers.items(): #берёт ссылки и типы кулера из json файла
     req = requests.get(url=cooler_href, headers=headers)
     src = req.text
     with open(f'data/{cooler_type}.html', 'w', encoding='utf-8') as file:
@@ -43,4 +43,13 @@ for cooler_type, cooler_href in all_coolers.items():
     with open(f'data/{cooler_type}.html', encoding='utf-8') as file:
         src = file.read()
     soup = BeautifulSoup(src, 'lxml')
+    all_coolers_species_href = soup.find_all(class_='catalog-top-sections__link')
+    all_coolers_type_species_dict = {} # словарь видов типа кулеров
+    for cooler_species_type in all_coolers_species_href:
+        cooler_species_text = cooler_species_type.text  # название типа кулера для воды  # для парсинга только нужных типов кулеров
+        cooler_species_href = 'https://akva-mir.ru' + cooler_species_type.get('href') + '?pagecount=500'  # ссылка на тип кулера для воды
+        all_coolers_type_species_dict[cooler_species_text] = cooler_species_href
+    with open(f'all_coolers_{cooler_type}_dict.json', 'w', encoding='utf-8') as file:  # записыввем типы кулеров в json файл
+        json.dump(all_coolers_type_species_dict, file, indent=4, ensure_ascii=False)
+
 
