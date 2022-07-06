@@ -36,5 +36,8 @@ with open('all_coolers_type_dict.json', encoding='utf-8') as file:
     all_coolers = json.load(file)
 
 for cooler_type, cooler_href in all_coolers.items():
-    print(cooler_type)
-    print(cooler_href)
+    req = requests.get(url=cooler_href, headers=headers)
+    src = req.text
+    with open(f'data/{cooler_type}.html', 'w', encoding='utf-8') as file:
+        file.write(src)
+
