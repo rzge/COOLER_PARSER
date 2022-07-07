@@ -98,7 +98,8 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
 
         # print(cooler_images_str)
         title = soup.find(class_="product-title__title").text  # название модели
-        # print(title)
+        name = title.strip()
+        # print(name)
 
         article = soup.find(class_='product-number__text offer-active').text
         product_number = article.strip()  # для удаления пробелов слева и справа (артикль)
@@ -111,4 +112,3 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         # для удаления лишних строк и проблкма можду цифрами, а также символа ₽
         price_rubles = price.strip().replace(' ', '').replace('₽', '')
         # print(price_rubles)
-
