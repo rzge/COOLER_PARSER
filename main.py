@@ -5,6 +5,7 @@ import json
 import random
 from time import sleep
 from fake_useragent import UserAgent
+
 # url = "https://akva-mir.ru/catalog/kulery_dlya_vody/"
 
 ua = UserAgent()
@@ -35,8 +36,11 @@ headers = {
 # with open('all_coolers_type_dict.json', 'w', encoding='utf-8') as file: # записыввем типы кулеров в json файл
 #    json.dump(all_coolers_type_dict, file, indent=4, ensure_ascii=False)
 
-with open('all_coolers_type_dict.json', encoding='utf-8') as file:  # ссылки на типы кулеров по 500 страниц
-    all_coolers = json.load(file)
+
+all_coolers = {
+    "Кулеры напольные": "https://akva-mir.ru/catalog/kulery_napolnye/?pagecount=500",
+    "Кулеры настольные": "https://akva-mir.ru/catalog/kulery_nastolnye/?pagecount=500"
+}
 
 # for cooler_type, cooler_href in all_coolers.items(): #берёт ссылки и типы кулера из json файла
 #     req = requests.get(url=cooler_href, headers=headers)
@@ -59,9 +63,9 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
     print(f'Сейчас обрабатываются {cooler_type}')
     req = requests.get(url=cooler_href, headers=headers)
     src = req.text
-    with open(f'data/{cooler_type}.html', 'w', encoding='utf-8') as file:
+    with open(f'{cooler_type}.html', 'w', encoding='utf-8') as file:
         file.write(src)
-    with open(f'data/{cooler_type}.html', encoding='utf-8') as file:
+    with open(f'{cooler_type}.html', encoding='utf-8') as file:
         src = file.read()
     with open(f'data/{cooler_type}.csv', 'w', encoding='utf-8-sig') as file:  # sig нужен для правильной декодировки
         writer = csv.writer(file, delimiter=';')  # чтоб нормально разделялось
@@ -111,17 +115,16 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         # print(product_number)
         try:
             availabilty = soup.find(class_='product-availability__status -fullness-2').text  # проверяет на складе
-            print(availabilty)
+            # print(availabilty)
         except:
             availabilty = soup.find(class_='product-availability__status -fullness-0').text  # на отстутсвие
-            print(availabilty)
+            # print(availabilty)
 
         try:
             price = soup.find(class_='product-prices__price -current').text
             price_rubles = price.strip().replace(' ', '').replace('₽', '')
         except:
             price_rubles = 'нет цены'
-
 
         weight = soup.find_all(class_='product-parameters__value')
         for cooler_weight in weight:
@@ -152,5 +155,5 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                     cooler_images_str  # через запятую url картинок (сделано)
                 )
             )
-        sleep(random.randrange(2, 4)) #задержка, чтоб не бомбить сайты
+        sleep(random.randrange(2, 4))  # задержка, чтоб не бомбить сайты
 input('Работа завершена, нажмите esc')
