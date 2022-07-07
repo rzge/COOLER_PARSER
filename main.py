@@ -117,12 +117,8 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
             price = soup.find(class_='product-prices__price -current').text
             price_rubles = price.strip().replace(' ', '').replace('₽', '')
         except:
-            price_rubles = '0'
+            price_rubles = 'нет цены'
 
-
-        # для удаления лишних строк и проблкма можду цифрами, а также символа ₽
-        price_rubles = price.strip().replace(' ', '').replace('₽', '')
-        # print(price_rubles)
 
         weight = soup.find_all(class_='product-parameters__value')
         for cooler_weight in weight:
