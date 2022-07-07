@@ -64,14 +64,14 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         writer.writerow(
             (
                 'weight_unit : Единица веса',  # всегда кг!
-                'name : Название',
+                'name : Название',  # (сделано)
                 'weight : Вес',  # число и есть вес
                 'article : Артикул',
                 'amount : Количество',
                 'price : Цена',
-                'vendor : Производитель',  # всегда AEL
-                'folder : Категория',  # cooler_type
-                'image : Иллюстрация'  # через запятую url картинок
+                'vendor : Производитель',  # всегда AEL!
+                'folder : Категория',  # cooler_type!
+                'image : Иллюстрация'  # через запятую url картинок (сделано)
             )
         )
     soup = BeautifulSoup(src, 'lxml')
@@ -84,17 +84,18 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         if cooler_model_href.find('600') == -1:  # исключаем тестовый кулер
             coolers_hrefs.append(cooler_model_href)
 
-    for model in range(0, 1): #пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
+    for model in range(0, 1):  # пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
         req = requests.get(url=coolers_hrefs[model], headers=headers)
         src = req.text
         soup = BeautifulSoup(src, 'lxml')
         images = soup.find_all(class_='gallery-previews-item__image')
-        cooler_images = [] #список url картинок
+        cooler_images = []  # список url картинок
         for image in images:
             cooler_images.append('https://akva-mir.ru' + image.get('src') + ',')
-        cooler_images_str=""
+        cooler_images_str = ""
         for i in range(0, len(cooler_images)):
-            cooler_images_str+=cooler_images[i]
+            cooler_images_str += cooler_images[i]  # ЗАГРУЖАЕМ В CSV
 
-        #print(cooler_images_str)
-
+        # print(cooler_images_str)
+        title = soup.find(class_="product-title__title").text  # название модели
+        print(title)
