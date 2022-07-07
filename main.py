@@ -120,3 +120,4 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                 weight_netto = cooler_weight_text  # это надо заливать в CSV
                 break
         # print(weight_netto)
+        # print(cooler_type)
