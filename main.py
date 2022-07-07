@@ -77,8 +77,24 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
     soup = BeautifulSoup(src, 'lxml')
     all_coolers_na_hrefs = soup.find(class_="catalog-items__inner row").find_all(class_='card-image__link offer-active')
     # print(len(all_coolers_na_hrefs))
+
     coolers_hrefs = []  # список ссылок кулеров
     for cooler_model in all_coolers_na_hrefs:
         cooler_model_href = 'https://akva-mir.ru' + cooler_model.get('href')
         if cooler_model_href.find('600') == -1:  # исключаем тестовый кулер
             coolers_hrefs.append(cooler_model_href)
+
+    for model in range(0, 1): #пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
+        req = requests.get(url=coolers_hrefs[model], headers=headers)
+        src = req.text
+        soup = BeautifulSoup(src, 'lxml')
+        images = soup.find_all(class_='gallery-previews-item__image')
+        cooler_images = [] #список url картинок
+        for image in images:
+            cooler_images.append('https://akva-mir.ru' + image.get('src') + ',')
+        cooler_images_str=""
+        for i in range(0, len(cooler_images)):
+            cooler_images_str+=cooler_images[i]
+
+        #print(cooler_images_str)
+
