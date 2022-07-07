@@ -66,8 +66,8 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                 'weight_unit : Единица веса',  # всегда кг!
                 'name : Название',  # (сделано)
                 'weight : Вес',  # число и есть вес
-                'article : Артикул',
-                'amount : Количество',
+                'article : Артикул',  # (сделано)
+                'amount : Количество',  # (сделано)
                 'price : Цена',
                 'vendor : Производитель',  # всегда AEL!
                 'folder : Категория',  # cooler_type!
@@ -101,5 +101,7 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         # print(title)
 
         article = soup.find(class_='product-number__text offer-active').text
-        product_number = article.strip()  # для удаления пробелов слева и справа
+        product_number = article.strip()  # для удаления пробелов слева и справа (артикль)
         # print(product_number)
+        availabilty = soup.find(class_='product-availability__status -fullness-2').text  # проверяет на складе
+        # print(availabilty)
