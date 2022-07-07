@@ -2,7 +2,8 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 import json
-
+import random
+from time import sleep
 # url = "https://akva-mir.ru/catalog/kulery_dlya_vody/"
 
 headers = {
@@ -149,4 +150,5 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                     cooler_images_str  # через запятую url картинок (сделано)
                 )
             )
+        sleep(random.randrange(2, 4)) #задержка, чтоб не бомбить сайты
 input('Работа завершена, нажмите esc')
