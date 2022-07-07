@@ -84,7 +84,7 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         if cooler_model_href.find('600') == -1:  # исключаем тестовый кулер
             coolers_hrefs.append(cooler_model_href)
 
-    for model in range(0, 1):  # пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
+    for model in range(0, 2):  # пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
         req = requests.get(url=coolers_hrefs[model], headers=headers)
         src = req.text
         soup = BeautifulSoup(src, 'lxml')
