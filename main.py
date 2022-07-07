@@ -74,3 +74,10 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                 'image : Иллюстрация'  # через запятую url картинок
             )
         )
+    soup = BeautifulSoup(src, 'lxml')
+    all_coolers_na_hrefs = soup.find(class_="catalog-items__inner row").find_all(class_='card-image__link offer-active')
+    print(len(all_coolers_na_hrefs))
+    for cooler_model in all_coolers_na_hrefs:
+        cooler_model_href = 'https://akva-mir.ru'+cooler_model.get('href')
+        print(cooler_model_href)
+
