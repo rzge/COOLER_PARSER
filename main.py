@@ -86,7 +86,7 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
             coolers_hrefs.append(cooler_model_href)
 
     for model in range(0, len(coolers_hrefs)):  # пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
-        print(f'Обрабатывается {model+1}-ый кулер из категории {cooler_type}')
+        print(f'Обрабатывается {model + 1}-ый кулер из категории {cooler_type}')
         req = requests.get(url=coolers_hrefs[model], headers=headers)
         src = req.text
         soup = BeautifulSoup(src, 'lxml')
@@ -113,8 +113,13 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
             availabilty = soup.find(class_='product-availability__status -fullness-0').text  # на отстутсвие
             print(availabilty)
 
+        try:
+            price = soup.find(class_='product-prices__price -current').text
+            price_rubles = price.strip().replace(' ', '').replace('₽', '')
+        except:
+            price_rubles = '0'
 
-        price = soup.find(class_='product-prices__price -current').text
+
         # для удаления лишних строк и проблкма можду цифрами, а также символа ₽
         price_rubles = price.strip().replace(' ', '').replace('₽', '')
         # print(price_rubles)
@@ -132,7 +137,6 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
             category = 'Напольные кулеры для воды'
         else:
             category = 'Настольные кулеры для воды'
-
 
         with open(f'data/{cooler_type}.csv', 'a', encoding='utf-8-sig') as file:  # sig нужен для правильной декодировки
             writer = csv.writer(file, delimiter=';')  # чтоб нормально разделялось
