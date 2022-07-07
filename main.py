@@ -59,3 +59,18 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         file.write(src)
     with open(f'data/{cooler_type}.html', encoding='utf-8') as file:
         src = file.read()
+    with open(f'data/{cooler_type}.csv', 'w', encoding='utf-8-sig') as file:  # sig нужен для правильной декодировки
+        writer = csv.writer(file, delimiter=';')  # чтоб нормально разделялось
+        writer.writerow(
+            (
+                'weight_unit : Единица веса',  # всегда кг!
+                'name : Название',
+                'weight : Вес',  # число и есть вес
+                'article : Артикул',
+                'amount : Количество',
+                'price : Цена',
+                'vendor : Производитель',  # всегда AEL
+                'folder : Категория',  # cooler_type
+                'image : Иллюстрация'  # через запятую url картинок
+            )
+        )
