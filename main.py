@@ -65,7 +65,7 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
             (
                 'weight_unit : Единица веса',  # всегда кг!
                 'name : Название',  # (сделано)
-                'weight : Вес',  # число и есть вес
+                'weight : Вес',  # число и есть вес (сделано)
                 'article : Артикул',  # (сделано)
                 'amount : Количество',  # (сделано)
                 'price : Цена',  # (сделано)
@@ -112,3 +112,11 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         # для удаления лишних строк и проблкма можду цифрами, а также символа ₽
         price_rubles = price.strip().replace(' ', '').replace('₽', '')
         # print(price_rubles)
+
+        weight = soup.find_all(class_='product-parameters__value')
+        for cooler_weight in weight:
+            cooler_weight_text = cooler_weight.text
+            if '.' in cooler_weight_text:
+                weight_netto = cooler_weight_text  # это надо заливать в CSV
+                break
+        # print(weight_netto)
