@@ -68,7 +68,7 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                 'weight : Вес',  # число и есть вес
                 'article : Артикул',  # (сделано)
                 'amount : Количество',  # (сделано)
-                'price : Цена',
+                'price : Цена',  # (сделано)
                 'vendor : Производитель',  # всегда AEL!
                 'folder : Категория',  # cooler_type!
                 'image : Иллюстрация'  # через запятую url картинок (сделано)
@@ -103,5 +103,12 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         article = soup.find(class_='product-number__text offer-active').text
         product_number = article.strip()  # для удаления пробелов слева и справа (артикль)
         # print(product_number)
+
         availabilty = soup.find(class_='product-availability__status -fullness-2').text  # проверяет на складе
         # print(availabilty)
+
+        price = soup.find(class_='product-prices__price -current').text
+        # для удаления лишних строк и проблкма можду цифрами, а также символа ₽
+        price_rubles = price.strip().replace(' ', '').replace('₽', '')
+        # print(price_rubles)
+
