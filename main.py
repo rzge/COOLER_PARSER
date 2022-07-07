@@ -53,6 +53,7 @@ with open('all_coolers_type_dict.json', encoding='utf-8') as file:  # ссылк
 #         json.dump(all_coolers_type_species_dict, file, indent=4, ensure_ascii=False)
 
 for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки и типы кулера из json файла
+    print(f'Сейчас обрабатываются {cooler_type}')
     req = requests.get(url=cooler_href, headers=headers)
     src = req.text
     with open(f'data/{cooler_type}.html', 'w', encoding='utf-8') as file:
@@ -84,7 +85,8 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         if cooler_model_href.find('600') == -1:  # исключаем тестовый кулер
             coolers_hrefs.append(cooler_model_href)
 
-    for model in range(0, 2):  # пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
+    for model in range(0, len(coolers_hrefs)):  # пробегаемя по ссылкам(пока с одним, чтоб не бомбить запросами
+        print(f'Обрабатывается {model+1}-ый кулер из категории {cooler_type}')
         req = requests.get(url=coolers_hrefs[model], headers=headers)
         src = req.text
         soup = BeautifulSoup(src, 'lxml')
@@ -104,9 +106,13 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         article = soup.find(class_='product-number__text offer-active').text
         product_number = article.strip()  # для удаления пробелов слева и справа (артикль)
         # print(product_number)
+        try:
+            availabilty = soup.find(class_='product-availability__status -fullness-2').text  # проверяет на складе
+            print(availabilty)
+        except:
+            availabilty = soup.find(class_='product-availability__status -fullness-0').text  # на отстутсвие
+            print(availabilty)
 
-        availabilty = soup.find(class_='product-availability__status -fullness-2').text  # проверяет на складе
-        # print(availabilty)
 
         price = soup.find(class_='product-prices__price -current').text
         # для удаления лишних строк и проблкма можду цифрами, а также символа ₽
@@ -143,3 +149,4 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
                     cooler_images_str  # через запятую url картинок (сделано)
                 )
             )
+input('Работа завершена, нажмите esc')
