@@ -8,7 +8,7 @@ from fake_useragent import UserAgent
 
 # url = "https://akva-mir.ru/catalog/kulery_dlya_vody/"
 
-ua = UserAgent()
+ua = UserAgent()  # для фейка user agent
 headers = {
     "Accept": "*/*",
     "User-Agent": ua.chrome
