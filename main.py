@@ -115,7 +115,7 @@ for cooler_type, cooler_href in all_coolers.items():  # берёт ссылки 
         # print(product_number)
         try:
             availabilty = soup.find(class_='product-availability__status -fullness-2').text  # проверяет на складе
-            # print(availabilty)
+            availabilty = str(random.randint(4, 11))
         except:
             availabilty = soup.find(class_='product-availability__status -fullness-0').text  # на отстутсвие
             # print(availabilty)
