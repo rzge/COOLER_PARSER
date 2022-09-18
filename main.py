@@ -1,9 +1,8 @@
-import requests
 import csv
-from bs4 import BeautifulSoup
-import json
 import random
 from time import sleep
+import requests
+from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 # url = "https://akva-mir.ru/catalog/kulery_dlya_vody/"
@@ -33,7 +32,7 @@ headers = {
 #         cooler_href = 'https://akva-mir.ru' + cooler_type.get('href')  # ссылка на тип кулера для воды
 #         all_coolers_type_dict[cooler_text] = cooler_href
 
-# with open('all_coolers_type_dict.json', 'w', encoding='utf-8') as file: # записыввем типы кулеров в json файл
+# with open('all_coolers_type_dict.json', 'w', encoding='utf-8') as file: # записываем типы кулеров в json файл
 #    json.dump(all_coolers_type_dict, file, indent=4, ensure_ascii=False)
 
 
